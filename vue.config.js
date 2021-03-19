@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const CopyToGit = require('./script/copyToGit');
 
 // 解析文件路径拼接返回路径字符串
 const resolve = (dir) => {

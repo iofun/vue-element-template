@@ -7,10 +7,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 /* 公共样式引入 */
 import 'normalize.css/normalize.css';
-import '@/styles/index.scss';
+import '@/styles/app.scss';
 import '@/router/permission';
-import '@/icons/svg';
-import '@/icons/ion';
+import '@/icons';
 
 // 中文版 element-ui，按如下方式声明
 Vue.use(ElementUI);

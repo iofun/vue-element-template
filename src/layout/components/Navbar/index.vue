@@ -44,11 +44,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$nav-height: 60px;
-$nav-line-height: 58px;
+@import "~@/styles/variables.scss";
 
 .navbar {
-  height: $nav-height;
+  height: #{$navHeight};
   overflow: hidden;
   position: relative;
   background: #fff;
@@ -66,12 +65,12 @@ $nav-line-height: 58px;
   }
   .breadcrumb-container {
     float: left;
-    line-height: $nav-line-height;
+    line-height: #{$navLineHeight};
   }
   .right-menu {
     float: right;
     height: 100%;
-    line-height: $nav-line-height;
+    line-height: #{$navLineHeight};
     box-sizing: border-box;
     font-size: 0;
     >*{

@@ -2,14 +2,14 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import config from '@/config';
 import baseRoutes from './modules/base';
-import demoRoutes from './modules/demo';
+import appRoutes from './modules/app';
 
 Vue.use(Router);
 
 const createRouter = () => new Router({
   mode: config.routerModel,
   scrollBehavior: () => ({ y: 0 }),
-  routes: baseRoutes.concat(demoRoutes)
+  routes: baseRoutes.concat(appRoutes)
 });
 
 const router = createRouter();

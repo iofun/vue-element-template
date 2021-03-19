@@ -1,5 +1,4 @@
 #app {
-
   .main-container {
     min-height: 100%;
     transition: margin-left .28s;
@@ -47,7 +46,7 @@
       display: none;
     }
 
-    .svg-icon {
+    .ion-icon {
       margin-right: 16px;
     }
 
@@ -84,11 +83,11 @@
 
   .hideSidebar {
     .sidebar-container {
-      width: 64px !important;
+      width: $sideBarMinWidth !important;
     }
 
     .main-container {
-      margin-left: 64px;
+      margin-left: $sideBarMinWidth;
     }
 
     .submenu-title-noDropdown {
@@ -98,7 +97,7 @@
       .el-tooltip {
         padding: 0 !important;
 
-        .svg-icon {
+        .ion-icon {
           margin-left: 25px;
         }
 
@@ -114,7 +113,7 @@
       &>.el-submenu__title {
         padding: 0 !important;
 
-        .svg-icon {
+        .ion-icon {
           margin-left: 25px;
         }
 
@@ -168,7 +167,6 @@
   }
 
   .withoutAnimation {
-
     .main-container,
     .sidebar-container {
       transition: none;
@@ -179,7 +177,7 @@
 // when menu collapsed
 .el-menu--vertical {
   &>.el-menu {
-    .svg-icon {
+    .ion-icon {
       margin-right: 16px;
     }
     .sub-el-icon {

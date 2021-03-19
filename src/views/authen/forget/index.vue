@@ -8,8 +8,8 @@
           </div>
           <div class="auth-form">
             <!-- 获取验证码 -->
-            <template v-if="!verified">
-              <el-form ref="forgetForm" :model="forgetForm" :rules="forgetRules" auto-complete="on" label-position="left">
+            <template>
+              <el-form v-show="!verified" ref="forgetForm" :model="forgetForm" :rules="forgetRules" auto-complete="on" label-position="left">
                 <el-form-item prop="username">
                   <span class="svg">
                     <i class="el-icon-user"></i>
@@ -32,11 +32,10 @@
                     class="el-none"
                     placeholder="请输入验证码"
                   ></el-input>
-                  <el-button type="primary">获取验证码</el-button>
+                  <el-button type="primary" :disabled="!canSend" @click="handleApiGetCode">{{ sendTxt }}</el-button>
                 </el-form-item>
 
                 <el-button
-                  :loading="loading"
                   type="primary"
                   style="width:100%;"
                   @click.native.prevent="handleApiVerify"
@@ -44,8 +43,8 @@
               </el-form>
             </template>
             <!-- 重置 -->
-            <template v-else>
-              <el-form ref="resetForm" :model="resetForm" :rules="resetRules" auto-complete="on" label-position="left">
+            <template>
+              <el-form v-show="verified" ref="resetForm" :model="resetForm" :rules="resetRules" auto-complete="on" label-position="left">
                 <el-form-item prop="password">
                   <span class="svg">
                     <i class="el-icon-lock"></i>
@@ -76,7 +75,6 @@
                 </el-form-item>
 
                 <el-button
-                  :loading="loading"
                   type="primary"
                   style="width:100%;"
                   @click.native.prevent="handleApiReset"
@@ -96,6 +94,7 @@
 
 <script>
 import { validEmail } from '@/utils/validate';
+import { calcuMd5 } from '@/utils/libs';
 
 export default {
   name: 'Forget',
@@ -108,21 +107,21 @@ export default {
       }
     };
     const validateVerifyCode = (rule, value, callback) => {
-      if (value.length !== 6) {
-        callback(new Error('请输入6位数字验证码'));
+      if (!value) {
+        callback(new Error('请输入验证码'));
       } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
-      if (value.length !== 6) {
+      if (value.length < 6) {
         callback(new Error('密码至少6位字符'));
       } else {
         callback();
       }
     };
     const validateConfirmPassword = (rule, value, callback) => {
-      if (value.length !== 6) {
+      if (value.length < 6) {
         callback(new Error('密码至少6位字符'));
       } else {
         if (value !== this.resetForm.password) {
@@ -133,12 +132,13 @@ export default {
     };
     return {
       forgetForm: {
-        username: '',
+        username: 'admin@qq.com',
         verifyCode: ''
       },
       resetForm: {
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        md5Code: ''
       },
       forgetRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -148,60 +148,128 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         confirmPassword: [{ required: true, trigger: 'blur', validator: validateConfirmPassword }]
       },
-      loading: false,
       verified: false,
-      passwordType: 'password'
+      passwordType: 'password',
+      canSend: true,
+      sendTxt: '获取验证码',
+      codeIimer: null
     };
   },
+  destroyed() {
+    this.handleClearTimer();
+  },
   methods: {
-    handleApiReset() {
-      this.$refs.resetForm.validate(valid => {
+    // 倒计时
+    handleCountdown() {
+      this.canSend = false;
+      let timer = 120;
+      this.codeIimer = setInterval(() => {
+        timer = timer - 1;
+        if (timer <= 0) {
+          this.handleClearTimer();
+        } else {
+          this.sendTxt = `重新发送( ${timer}秒 )`;
+        }
+      }, 1000);
+    },
+    // 清楚倒计时
+    handleClearTimer() {
+      clearTimeout(this.codeIimer);
+      this.codeIimer = null;
+      this.canSend = true;
+      this.sendTxt = '获取验证码';
+    },
+    // 获取验证码
+    handleApiGetCode() {
+      if (!this.canSend) {
+        return false;
+      }
+      if (!this.forgetForm.username) {
+        return this.$message.error('请输入邮箱账号');
+      }
+
+      const opt = {
+        toEmail: this.forgetForm.username
+      };
+
+      this.$store.dispatch('auth/getForgetCode', opt).then((res) => {
+        console.log(res);
+        const { code } = res;
+        if (code === 1) {
+          this.handleCountdown();
+          this.$message.success('验证码发送成功');
+        }
+      }).catch((err) => {
+        this.$message.error(err);
+      });
+    },
+    // 校验验证码
+    handleApiVerify() {
+      this.$refs.forgetForm.validate(valid => {
         if (valid) {
-          console.log(valid);
-          // this.loading = true;
-          // this.$store.dispatch('auth/login', this.forgetForm).then(() => {
-          //   this.loading = false;
-          // }).catch(() => {
-          //   this.loading = false;
-          // });
+          this.$store.dispatch('auth/verifyForgetCode', this.forgetForm).then((res) => {
+            const { code, data } = res;
+            if (code === 1) {
+              this.verified = true;
+              this.resetForm.md5Code = data;
+              this.handleClearTimer();
+            }
+          }).catch((err) => {
+            this.$message.error(err);
+          });
         } else {
           return false;
         }
       });
     },
-    handleApiVerify() {
-      this.$refs.forgetForm.validate(valid => {
+    // 确定重置密码
+    handleApiReset() {
+      if (!this.resetForm.md5Code) {
+        return this.$message.error('缺少校验码');
+      }
+
+      const opt = {
+        password: calcuMd5(this.resetForm.password),
+        confirmPassword: calcuMd5(this.resetForm.confirmPassword),
+        md5Code: this.resetForm.md5Code
+      };
+
+      this.$refs.resetForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          this.$store.dispatch('auth/login', this.forgetForm).then(() => {
-            this.loading = false;
-          }).catch(() => {
-            this.loading = false;
+          this.$store.dispatch('auth/outResetPassword', opt).then((res) => {
+            const { code } = res;
+            if (code === 1) {
+              this.$message({
+                message: '密码重置成功',
+                type: 'success',
+                duration: 1000
+              });
+              setTimeout(() => {
+                this.$router.push({ path: '/' });
+              }, 1500);
+            }
+          }).catch((err) => {
+            this.$message.error(err);
           });
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
     }
   }
+
 };
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-@import '~@/styles/auth.scss';
-</style>
-
-<style lang="scss">
 .auth-container {
   .el-none{
-    width: 60%;
+    width: 55%;
     margin-right: 5%;
   }
   .el-flex{
     .el-button{
-      width: 35%;
+      width: 40%;
     }
   }
   .btn-group{

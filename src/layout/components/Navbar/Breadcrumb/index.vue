@@ -29,7 +29,7 @@ export default {
   methods: {
     isDashboard(route) {
       const name = route && route.name;
-      if (!name) {
+      if (name !== 'Home') {
         return false;
       }
       return true;

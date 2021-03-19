@@ -16,7 +16,7 @@ class HttpRequest {
       headers: {}
     };
     if (store.getters.token) {
-      config.headers['X-Token'] = getUserToken();
+      config.headers['Authorization'] = getUserToken();
     }
     return config;
   }

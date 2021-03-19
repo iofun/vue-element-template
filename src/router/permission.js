@@ -2,7 +2,6 @@ import router from '@/router';
 import store from '@/store';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { Message } from 'element-ui';
 import { getUserToken } from '@/utils/authToken';
 import { whiteList } from '@/config';
 import { getPageTitle } from '@/utils/libs';
@@ -26,17 +25,16 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' });
       NProgress.done();
     } else {
-      const hasGetUserInfo = store.getters.name;
+      const hasGetUserInfo = store.getters.logged;
       if (hasGetUserInfo) {
         next();
       } else {
         try {
-          await store.dispatch('auth/getInfo');
+          await store.dispatch('auth/getUserInfo');
           next();
           NProgress.done();
         } catch (error) {
           await store.dispatch('auth/resetToken');
-          Message.error({ message: error.message || 'Has Error' });
           next(`/login?redirect=${to.path}`);
           NProgress.done();
         }

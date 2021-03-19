@@ -1,7 +1,8 @@
 <template>
   <el-dropdown class="avatar-container" trigger="click">
     <div class="avatar-wrapper">
-      <img v-if="avatar" src="avatar" class="user-avatar">
+      <span class="user-nick">{{ nickname }}</span>
+      <img v-if="avatar" :src="avatar" class="user-avatar">
       <img v-else src="~@/assets/images/user.png" class="user-avatar">
       <i class="el-icon-caret-bottom" />
     </div>
@@ -38,7 +39,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'avatar'
+      'avatar',
+      'nickname'
     ])
   },
   methods: {
@@ -82,6 +84,9 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
+    .user-nick{
+      margin-right: 12px;
+    }
     .user-avatar {
       cursor: pointer;
       width: 36px;

@@ -67,7 +67,7 @@ export default {
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能少于6位数字'));
+        callback(new Error('密码不能少于6位字符'));
       } else {
         callback();
       }
@@ -75,7 +75,7 @@ export default {
     return {
       loginForm: {
         username: 'admin@qq.com',
-        password: '111111'
+        password: '111222'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],

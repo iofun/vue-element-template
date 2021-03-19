@@ -1,6 +1,6 @@
 <template>
   <div class="setting-container">
-    <el-drawer :visible.sync="drawer" :direction="direction" :append-to-body="true" :with-header="false" @closed="handleClose">
+    <el-drawer :visible.sync="drawer" size="300px" :direction="direction" :append-to-body="true" :with-header="false" @closed="handleClose">
       <div class="drawer-wrap">
         <h3 class="drawer-title">系统布局配置</h3>
         <div class="drawer-item">
@@ -19,6 +19,12 @@
           <div class="dt">侧边栏logo</div>
           <div class="dd">
             <el-switch v-model="showLogo" class="drawer-switch" />
+          </div>
+        </div>
+        <div class="drawer-item">
+          <div class="dt">固定 Header</div>
+          <div class="dd">
+            <el-switch v-model="fixedHeader" class="drawer-switch" />
           </div>
         </div>
       </div>

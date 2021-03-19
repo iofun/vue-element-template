@@ -1,9 +1,11 @@
 <template>
-  <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
-      <router-view :key="key" />
-    </transition>
-  </section>
+  <div class="layout-content">
+    <section class="content-main">
+      <transition name="fade-transform" mode="out-in">
+        <router-view :key="key" />
+      </transition>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -17,20 +19,26 @@ export default {
 };
 </script>
 
-<style scoped>
-.app-main {
-  /*50 = navbar  */
-  min-height: calc(100vh - 50px);
+<style lang="scss">
+@import "~@/styles/variables.scss";
+
+.layout-content {
+  height: calc(100vh - #{$navHeight} );
   width: 100%;
   position: relative;
   overflow: hidden;
+  background: #f0f2f5;
+  .content-main{
+    padding: 15px;
+    height: 100%;
+    overflow: auto;
+  }
 }
-.fixed-header+.app-main {
-  padding-top: 50px;
+.fixed-header+.layout-content {
+  padding-top: #{$navHeight};
+   min-height: calc(100vh);
 }
-</style>
 
-<style lang="scss">
 // fix css style bug in open el-dialog
 .el-popup-parent--hidden {
   .fixed-header {
