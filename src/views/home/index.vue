@@ -4,8 +4,6 @@
       <div class="welcome">
         <div class="logo">
           <img :src="logo" alt="">
-          <ion-icon name="bug 2" />
-          <ion-icon name="bug" />
         </div>
         <div class="system"><i class="el-icon-location-information"></i> {{ title }}</div>
       </div>

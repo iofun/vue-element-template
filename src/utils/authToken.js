@@ -1,17 +1,17 @@
 
 import { tokenPrefix } from '@/config';
-import { setCookies, getCookies, removeCookies } from '@/utils/cookies';
+import { Cookie } from '@/utils/cookie';
 
 const TokenKey = `${tokenPrefix}_token`;
 
 export function getUserToken() {
-  return getCookies(TokenKey);
+  return Cookie.get(TokenKey);
 }
 
 export function setUserToken(token) {
-  return setCookies(TokenKey, token);
+  return Cookie.set(TokenKey, token);
 }
 
 export function removeUserToken() {
-  return removeCookies(TokenKey);
+  return Cookie.remove(TokenKey);
 }

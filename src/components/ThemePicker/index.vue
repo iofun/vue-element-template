@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getCookies, removeCookies } from '@/utils/cookies';
+import { Cookie } from '@/utils/cookie';
 import config from '@/config';
 
 export default {
@@ -33,12 +33,12 @@ export default {
   },
   methods: {
     async initTheme() {
-      this.cacheTheme = await getCookies(`${config.tokenPrefix}_theme`);
+      this.cacheTheme = await Cookie.get(`${config.tokenPrefix}_theme`);
       if (this.cacheTheme) {
         if (this.uiTheme !== this.cacheTheme && this.cacheTheme.indexOf('#') > -1) {
           this.changeTheme(this.cacheTheme);
         } else {
-          removeCookies(`${config.tokenPrefix}_theme`);
+          Cookie.remove(`${config.tokenPrefix}_theme`);
         }
       } else {
         this.cacheTheme = this.uiTheme;

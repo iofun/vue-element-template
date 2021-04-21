@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isExternal" :style="styleExternalIcon" class="ion-external-icon ion-icon" v-on="$listeners" />
+  <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
     <use :xlink:href="iconName" />
   </svg>
@@ -9,7 +9,7 @@
 import { isExternal } from '@/utils/validate';
 
 export default {
-  name: 'IonIcon',
+  name: 'SvgIcon',
   props: {
     name: {
       type: String,
@@ -28,7 +28,10 @@ export default {
       return `#icon-${this.name}`;
     },
     svgClass() {
-      return 'ion-icon ' + this.className || '';
+      if (this.className) {
+        return `svg-icon ${this.className}`;
+      }
+      return 'svg-icon';
     },
     styleExternalIcon() {
       return {
@@ -41,15 +44,15 @@ export default {
 </script>
 
 <style scoped>
-.ion-icon {
+.svg-icon {
   width: 1em;
   height: 1em;
-  vertical-align: -0.18em;
+  vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
 }
 
-.ion-external-icon {
+.svg-external-icon {
   background-color: currentColor;
   mask-size: cover!important;
   display: inline-block;

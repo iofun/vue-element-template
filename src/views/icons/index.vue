@@ -1,15 +1,15 @@
 <template>
   <div class="icons-container">
     <el-tabs type="border-card">
-      <el-tab-pane label="Ion Icons">
+      <el-tab-pane label="Svg-Icons">
         <div class="grid">
-          <div v-for="item of ionIcons" :key="item" @click="handleClipboard(generateIonIconCode(item),$event)">
+          <div v-for="item of svgIcons" :key="item" @click="handleClipboard(generateSvgIconCode(item),$event)">
             <el-tooltip placement="top">
               <div slot="content">
-                {{ generateIonIconCode(item) }}
+                {{ generateSvgIconCode(item) }}
               </div>
               <div class="icon-item">
-                <ion-icon :name="item" class-name="disabled" />
+                <svg-icon :name="item" class-name="disabled" />
                 <span>{{ item }}</span>
               </div>
             </el-tooltip>
@@ -38,19 +38,19 @@
 <script>
 import clipboard from '@/utils/clipboard';
 import elementIcons from './icons-ele';
-import ionIcons from './icons-ion';
+import svgIcons from './icons-svg';
 
 export default {
   name: 'Icons',
   data() {
     return {
-      ionIcons,
+      svgIcons,
       elementIcons
     };
   },
   methods: {
-    generateIonIconCode(symbol) {
-      return `<ion-icon name="${symbol}" />`;
+    generateSvgIconCode(symbol) {
+      return `<svg-icon name="${symbol}" />`;
     },
     generateElementIconCode(symbol) {
       return `<i class="el-icon-${symbol}" />`;

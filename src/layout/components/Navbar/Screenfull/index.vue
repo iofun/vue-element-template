@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ion-icon :name="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" @click="click" />
+    <svg-icon :name="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" @click="click" />
   </div>
 </template>
 

@@ -1,14 +1,14 @@
 import variables from '@/styles/variables.scss';
-import { setCookies, getCookies } from '@/utils/cookies';
+import { Cookie } from '@/utils/cookie';
 import config from '@/config';
 
 const state = {
   theme: variables.theme,
-  tagsView: JSON.parse(getCookies('tags_view')) || false,
-  fixedHeader: JSON.parse(getCookies('fixed_header')) || false,
-  showLogo: JSON.parse(getCookies('sidebar_logo')) || false,
+  tagsView: JSON.parse(Cookie.get('tags_view')) || false,
+  fixedHeader: JSON.parse(Cookie.get('fixed_header')) || false,
+  showLogo: JSON.parse(Cookie.get('sidebar_logo')) || false,
   sidebar: {
-    opened: JSON.parse(getCookies('sidebar_open')) || false,
+    opened: JSON.parse(Cookie.get('sidebar_open')) || false,
     withoutAnimation: false
   },
   loading: false,
@@ -24,31 +24,31 @@ const mutations = {
   },
   CHANGE_THEME: (state, { key, value }) => {
     state[key] = value;
-    setCookies(`${config.tokenPrefix}_theme`, value);
+    Cookie.set(`${config.tokenPrefix}_theme`, value);
   },
   CHANGE_TAGSVIEW: (state, { key, value }) => {
     state[key] = value;
-    setCookies(`tags_view`, value);
+    Cookie.set(`tags_view`, value);
   },
   CHANGE_SIDEBARLOGO: (state, { key, value }) => {
     state[key] = value;
-    setCookies(`sidebar_logo`, value);
+    Cookie.set(`sidebar_logo`, value);
   },
   CHANGE_HEADER: (state, { key, value }) => {
     state[key] = value;
-    setCookies(`fixed_header`, value);
+    Cookie.set(`fixed_header`, value);
   },
   TOGGLE_SIDEBAR: state => {
     state.sidebar.opened = !state.sidebar.opened;
     state.sidebar.withoutAnimation = false;
     if (state.sidebar.opened) {
-      setCookies('sidebar_open', true);
+      Cookie.set('sidebar_open', true);
     } else {
-      setCookies('sidebar_open', false);
+      Cookie.set('sidebar_open', false);
     }
   },
   CLOSE_SIDEBAR: (state, withoutAnimation) => {
-    setCookies('sidebar_open', false);
+    Cookie.set('sidebar_open', false);
     state.sidebar.opened = false;
     state.sidebar.withoutAnimation = withoutAnimation;
   },

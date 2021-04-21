@@ -26,6 +26,7 @@
                   <i class="el-icon-lock"></i>
                 </span>
                 <el-input
+                  ref="passwordEle"
                   :key="passwordType"
                   v-model="loginForm.password"
                   :type="passwordType"
@@ -36,7 +37,7 @@
                   @keyup.enter.native="handleLogin"
                 />
                 <span class="show-pwd" @click="showPwd">
-                  <Icon :type=" passwordType ? 'md-eye-off' : 'md-eye'" />
+                  <svg-icon class-name="128" :name=" passwordType ? 'eye-off' : 'eye-open'" />
                 </span>
               </el-form-item>
               <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">登录</el-button>
@@ -102,7 +103,7 @@ export default {
         this.passwordType = 'password';
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
+        this.$refs.passwordEle.focus();
       });
     },
     handleLogin() {

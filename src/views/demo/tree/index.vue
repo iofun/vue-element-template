@@ -3,7 +3,7 @@
     <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom:30px;" />
 
     <el-tree
-      ref="tree2"
+      ref="treeEle"
       :data="data2"
       :props="defaultProps"
       :filter-node-method="filterNode"
@@ -63,7 +63,7 @@ export default {
   },
   watch: {
     filterText(val) {
-      this.$refs.tree2.filter(val);
+      this.$refs.treeEle.filter(val);
     }
   },
 

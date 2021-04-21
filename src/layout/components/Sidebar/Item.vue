@@ -20,7 +20,7 @@ export default {
       if (icon.includes('el-icon')) {
         vnodes.push(<i class={[icon, 'sub-el-icon']} />);
       } else {
-        vnodes.push(<ion-icon name={icon}/>);
+        vnodes.push(<svg-icon name={icon}/>);
       }
     }
 
