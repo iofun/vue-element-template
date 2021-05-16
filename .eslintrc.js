@@ -10,7 +10,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es6: true,
+    es6: true
   },
   extends: [
     'eslint:recommended',
@@ -18,7 +18,7 @@ module.exports = {
   ],
 
   // add your custom rules here
-  //it is base on https://github.com/vuejs/eslint-config-vue
+  // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
     'vue/attributes-order': ['error', {
       'order': [
@@ -36,15 +36,15 @@ module.exports = {
       ],
       'alphabetical': false
     }],
-    "no-irregular-whitespace":0,
-    "vue/html-self-closing": [0, {
-      "html": {
-        "void": "never",
-        "normal": "always",
-        "component": "always"
+    'no-irregular-whitespace': 0,
+    'vue/html-self-closing': [0, {
+      'html': {
+        'void': 'never',
+        'normal': 'always',
+        'component': 'always'
       },
-      "svg": "always",
-      "math": "always"
+      'svg': 'always',
+      'math': 'always'
     }],
     'vue/no-parsing-error': [2, {
       'x-invalid-end-tag': false,
@@ -53,17 +53,17 @@ module.exports = {
     'vue/no-use-v-if-with-v-for': [2, {
       'allowUsingIterationVar': true
     }],
-    "vue/max-attributes-per-line": [2, {
-      "singleline": 10,
-      "multiline": {
-        "max": 1,
-        "allowFirstLine": false
+    'vue/max-attributes-per-line': [2, {
+      'singleline': 10,
+      'multiline': {
+        'max': 1,
+        'allowFirstLine': false
       }
     }],
-    "vue/singleline-html-element-content-newline": "off",
-    "vue/multiline-html-element-content-newline":"off",
-    "vue/name-property-casing": ["error", "PascalCase"],
-    "vue/no-v-html": "off",
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/name-property-casing': ['error', 'PascalCase'],
+    'vue/no-v-html': 'off',
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -86,7 +86,7 @@ module.exports = {
     'curly': [2, 'multi-line'],
     'dot-location': [2, 'property'],
     'eol-last': 2,
-    'eqeqeq': ["error", "always", {"null": "ignore"}],
+    'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
     'generator-star-spacing': [2, {
       'before': true,
       'after': true
@@ -113,7 +113,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-array-constructor': 2,
     'no-caller': 2,
-    'no-console': 'off',
     'no-class-assign': 2,
     'no-cond-assign': 2,
     'no-const-assign': 2,
@@ -137,7 +136,6 @@ module.exports = {
     'no-implied-eval': 2,
     'no-inner-declarations': [2, 'functions'],
     'no-invalid-regexp': 2,
-    'no-irregular-whitespace': 2,
     'no-iterator': 2,
     'no-label-var': 2,
     'no-labels': [2, {
@@ -235,4 +233,4 @@ module.exports = {
     }],
     'array-bracket-spacing': [2, 'never']
   }
-}
+};
