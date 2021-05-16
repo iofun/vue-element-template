@@ -14,7 +14,7 @@
     "preview": "node script/index.js --preview",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
     "lint": "vue-cli-service lint",
-    "eslint": "eslint --ext .js,.vue src"
+    "eslint": "eslint --fix --ext .js,.vue src"
   },
   "dependencies": {
     "axios": "^0.21.1",
