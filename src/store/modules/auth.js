@@ -1,5 +1,6 @@
 import { calcuMd5 } from '@/utils/libs';
 import apiAuth from '@/api/auth';
+import apiAccount from '@/api/auth';
 import { resetRouter } from '@/router';
 import {
   getUserToken,
@@ -63,9 +64,9 @@ const actions = {
   },
 
   // 获取用户信息
-  getUserInfo({ commit }) {
+  getAccountInfo({ commit }) {
     return new Promise((resolve, reject) => {
-      apiAuth.getUserInfo().then(response => {
+      apiAccount.getAccountInfo().then(response => {
         const { data } = response;
         commit('SET_USERINFO', data);
         commit('SET_AVATAR', data);

@@ -9,14 +9,6 @@ export default {
       method: 'POST'
     });
   },
-  // 获取用户信息
-  getUserInfo(params) {
-    return handleApi({
-      url: '/vue-admin-template/user/userInfo',
-      method: 'POST',
-      data: params
-    });
-  },
   // 退出
   logout(params) {
     return handleApi({

@@ -25,12 +25,12 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' });
       NProgress.done();
     } else {
-      const hasGetUserInfo = store.getters.logged;
-      if (hasGetUserInfo) {
+      const hasLogin = store.getters.logged;
+      if (hasLogin) {
         next();
       } else {
         try {
-          await store.dispatch('auth/getUserInfo');
+          await store.dispatch('auth/getAccountInfo');
           next();
           NProgress.done();
         } catch (error) {
